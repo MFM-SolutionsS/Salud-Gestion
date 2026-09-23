@@ -1,0 +1,19 @@
+<div class="dashboard">
+  <mat-card class="card">
+    <mat-card-title>Distribución de enfermedades</mat-card-title>
+    <canvas baseChart
+      [data]="chartData"
+      [type]="'pie'">
+    </canvas>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-title>Pacientes registrados</mat-card-title>
+    <p>Total: {{ pacientes.length }}</p>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-title>Zonas activas</mat-card-title>
+    <p>{{ zonas.length }} zonas en funcionamiento</p>
+  </mat-card>
+</div>
