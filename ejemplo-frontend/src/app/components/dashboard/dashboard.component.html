@@ -1,19 +1,400 @@
 <div class="dashboard">
-  <mat-card class="card">
-    <mat-card-title>Distribución de enfermedades</mat-card-title>
-    <canvas baseChart
-      [data]="chartData"
-      [type]="'pie'">
-    </canvas>
-  </mat-card>
 
-  <mat-card class="card">
-    <mat-card-title>Pacientes registrados</mat-card-title>
-    <p>Total: {{ pacientes.length }}</p>
-  </mat-card>
+  <!-- HEADER -->
+  <div class="dashboard-header">
 
-  <mat-card class="card">
-    <mat-card-title>Zonas activas</mat-card-title>
-    <p>{{ zonas.length }} zonas en funcionamiento</p>
-  </mat-card>
+    <div>
+      <h1>Inicio</h1>
+      <p>Resumen general del seguimiento sanitario</p>
+    </div>
+
+    <div class="last-update">
+      <span class="status-dot"></span>
+      Sistema actualizado
+    </div>
+
+  </div>
+
+
+  <!-- KPIs -->
+  <section class="stats-grid">
+
+    <mat-card class="stat-card">
+
+      <div class="stat-icon patients-icon">
+        <span class="material-symbols-outlined">
+          groups
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span class="stat-label">Pacientes registrados</span>
+
+        <strong>{{ totalPacientes }}</strong>
+
+        <span class="stat-description">
+          Base general
+        </span>
+      </div>
+
+    </mat-card>
+
+
+    <mat-card class="stat-card">
+
+      <div class="stat-icon hta-icon">
+        <span class="material-symbols-outlined">
+          favorite
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span class="stat-label">Hipertensión (HTA)</span>
+
+        <strong>{{ hta }}</strong>
+
+        <span class="stat-description">
+          {{ porcentajeHta }}% de la base
+        </span>
+      </div>
+
+    </mat-card>
+
+
+    <mat-card class="stat-card">
+
+      <div class="stat-icon dbt-icon">
+        <span class="material-symbols-outlined">
+          bloodtype
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span class="stat-label">Diabetes (DBT)</span>
+
+        <strong>{{ dbt }}</strong>
+
+        <span class="stat-description">
+          {{ porcentajeDbt }}% de la base
+        </span>
+      </div>
+
+    </mat-card>
+
+
+    <mat-card class="stat-card">
+
+      <div class="stat-icon combined-icon">
+        <span class="material-symbols-outlined">
+          monitoring
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span class="stat-label">HTA + DBT</span>
+
+        <strong>{{ htaDbt }}</strong>
+
+        <span class="stat-description">
+          {{ porcentajeHtaDbt }}% de la base
+        </span>
+      </div>
+
+    </mat-card>
+
+  </section>
+
+
+  <!-- MAIN GRID -->
+  <section class="main-grid">
+
+    <!-- DISTRIBUCIÓN -->
+ <mat-card class="panel disease-panel">
+
+  <div class="panel-header">
+
+    <div>
+      <h2>Distribución por problema de salud</h2>
+      <p>Pacientes registrados según diagnóstico</p>
+    </div>
+
+    <button class="panel-action">
+      Ver estadísticas
+    </button>
+
+  </div>
+
+
+  <div class="disease-list">
+
+    <div class="disease-item">
+
+      <div class="disease-header">
+        <span>Hipertensión (HTA)</span>
+        <strong>{{ hta }}</strong>
+      </div>
+
+      <div class="progress">
+        <div
+          class="progress-value hta"
+          [style.width.%]="(hta / totalPacientes) * 100">
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="disease-item">
+
+      <div class="disease-header">
+        <span>Diabetes (DBT)</span>
+        <strong>{{ dbt }}</strong>
+      </div>
+
+      <div class="progress">
+        <div
+          class="progress-value dbt"
+          [style.width.%]="(dbt / totalPacientes) * 100">
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="disease-item">
+
+      <div class="disease-header">
+        <span>HTA + DBT</span>
+        <strong>{{ htaDbt }}</strong>
+      </div>
+
+      <div class="progress">
+        <div
+          class="progress-value combined"
+          [style.width.%]="(htaDbt / totalPacientes) * 100">
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="disease-item">
+
+      <div class="disease-header">
+        <span>Otras enfermedades</span>
+        <strong>225</strong>
+      </div>
+
+      <div class="progress">
+        <div
+          class="progress-value other"
+          [style.width.%]="(225 / totalPacientes) * 100">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</mat-card>
+
+
+    <!-- ACTIVIDAD -->
+    <mat-card class="panel activity-panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Actividad reciente</h2>
+          <p>Últimos movimientos registrados</p>
+        </div>
+
+      </div>
+
+
+      <div class="activity-list">
+
+        @for (actividad of actividadReciente; track actividad.fecha + actividad.descripcion) {
+
+          <div class="activity-item">
+
+            <div
+              class="activity-icon"
+              [class.control]="actividad.tipo === 'control'"
+              [class.paciente]="actividad.tipo === 'paciente'"
+              [class.informe]="actividad.tipo === 'informe'"
+            >
+
+              <span class="material-symbols-outlined">
+
+                @if (actividad.tipo === 'control') {
+                  medical_services
+                }
+
+                @if (actividad.tipo === 'paciente') {
+                  person
+                }
+
+                @if (actividad.tipo === 'informe') {
+                  description
+                }
+
+              </span>
+
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                {{ actividad.descripcion }}
+              </strong>
+
+              <span>
+                {{ actividad.fecha }}
+              </span>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <button class="secondary-button">
+        Ver toda la actividad
+      </button>
+
+    </mat-card>
+
+  </section>
+
+
+  <!-- SECONDARY GRID -->
+  <section class="secondary-grid">
+
+
+    <!-- ZONAS -->
+    <mat-card class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Pacientes por zona</h2>
+          <p>Distribución territorial de pacientes</p>
+        </div>
+
+        <button class="panel-action">
+          Ver zonas
+        </button>
+
+      </div>
+
+
+      <div class="zones-list">
+
+        @for (zona of zonas; track zona.nombre) {
+
+          <div class="zone-item">
+
+            <div class="zone-header">
+
+              <span>
+                {{ zona.nombre }}
+              </span>
+
+              <strong>
+                {{ zona.pacientes }}
+              </strong>
+
+            </div>
+
+
+            <div class="progress">
+
+              <div
+                class="progress-value"
+                [style.width.%]="(zona.pacientes / porcentajeZonaMaxima) * 100">
+              </div>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </mat-card>
+
+
+    <!-- RESUMEN -->
+    <mat-card class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Resumen de seguimiento</h2>
+          <p>Actividad del período actual</p>
+        </div>
+
+      </div>
+
+
+      <div class="summary-list">
+
+        <div class="summary-item">
+
+          <div class="summary-icon">
+            <span class="material-symbols-outlined">
+              health_and_safety
+            </span>
+          </div>
+
+          <div>
+            <span>Controles realizados</span>
+            <strong>{{ controlesMes }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="summary-item">
+
+          <div class="summary-icon">
+            <span class="material-symbols-outlined">
+              person_add
+            </span>
+          </div>
+
+          <div>
+            <span>Nuevos pacientes</span>
+            <strong>{{ nuevosPacientes }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="summary-item">
+
+          <div class="summary-icon warning">
+            <span class="material-symbols-outlined">
+              pending_actions
+            </span>
+          </div>
+
+          <div>
+            <span>Seguimientos pendientes</span>
+            <strong>{{ pendientes }}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </mat-card>
+
+  </section>
+
 </div>

@@ -1,1 +1,364 @@
-<p>paciente-form works!</p>
+<div class="form-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div class="header-info">
+      <button
+        type="button"
+        class="back-button"
+        (click)="cancelar()"
+      >
+        <span class="material-symbols-outlined">
+          arrow_back
+        </span>
+      </button>
+
+      <div>
+        <h1>Nuevo paciente</h1>
+        <p>
+          Registrá los datos personales y sanitarios del paciente
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- MENSAJE DE ÉXITO -->
+  @if (guardado) {
+    <div class="success-message">
+      <span class="material-symbols-outlined">
+        check_circle
+      </span>
+
+      <div>
+        <strong>Paciente registrado correctamente</strong>
+        <span>Redirigiendo a pacientes...</span>
+      </div>
+    </div>
+  }
+
+
+  <form
+    [formGroup]="pacienteForm"
+    (ngSubmit)="guardarPaciente()"
+    class="patient-form"
+  >
+
+    <!-- DATOS PERSONALES -->
+    <section class="form-card">
+
+      <div class="section-header">
+
+        <div class="section-icon">
+          <span class="material-symbols-outlined">
+            person
+          </span>
+        </div>
+
+        <div>
+          <h2>Datos personales</h2>
+          <p>Información básica del paciente</p>
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <!-- NOMBRE -->
+        <div class="form-field">
+
+          <label for="nombre">
+            Nombre
+            <span>*</span>
+          </label>
+
+          <input
+            id="nombre"
+            type="text"
+            formControlName="nombre"
+            placeholder="Ej. Juan"
+          >
+
+          @if (
+            pacienteForm.controls.nombre.touched &&
+            pacienteForm.controls.nombre.invalid
+          ) {
+            <small class="error">
+              Ingresá el nombre del paciente.
+            </small>
+          }
+
+        </div>
+
+
+        <!-- APELLIDO -->
+        <div class="form-field">
+
+          <label for="apellido">
+            Apellido
+            <span>*</span>
+          </label>
+
+          <input
+            id="apellido"
+            type="text"
+            formControlName="apellido"
+            placeholder="Ej. Pérez"
+          >
+
+          @if (
+            pacienteForm.controls.apellido.touched &&
+            pacienteForm.controls.apellido.invalid
+          ) {
+            <small class="error">
+              Ingresá el apellido del paciente.
+            </small>
+          }
+
+        </div>
+
+
+        <!-- DNI -->
+        <div class="form-field">
+
+          <label for="dni">
+            DNI
+            <span>*</span>
+          </label>
+
+          <input
+            id="dni"
+            type="text"
+            formControlName="dni"
+            placeholder="Ej. 32.456.789"
+          >
+
+          @if (
+            pacienteForm.controls.dni.touched &&
+            pacienteForm.controls.dni.invalid
+          ) {
+            <small class="error">
+              Ingresá el DNI.
+            </small>
+          }
+
+        </div>
+
+
+        <!-- FECHA -->
+        <div class="form-field">
+
+          <label for="fechaNacimiento">
+            Fecha de nacimiento
+            <span>*</span>
+          </label>
+
+          <input
+            id="fechaNacimiento"
+            type="date"
+            formControlName="fechaNacimiento"
+          >
+
+          @if (
+            pacienteForm.controls.fechaNacimiento.touched &&
+            pacienteForm.controls.fechaNacimiento.invalid
+          ) {
+            <small class="error">
+              Seleccioná la fecha de nacimiento.
+            </small>
+          }
+
+        </div>
+
+
+        <!-- TELEFONO -->
+        <div class="form-field">
+
+          <label for="telefono">
+            Teléfono
+          </label>
+
+          <input
+            id="telefono"
+            type="tel"
+            formControlName="telefono"
+            placeholder="Ej. 3777 123456"
+          >
+
+        </div>
+
+
+        <!-- ZONA -->
+        <div class="form-field">
+
+          <label for="zona">
+            Zona sanitaria
+            <span>*</span>
+          </label>
+
+          <select
+            id="zona"
+            formControlName="zona"
+          >
+
+            <option value="">
+              Seleccionar zona
+            </option>
+
+            @for (zona of zonas; track zona) {
+              <option [value]="zona">
+                {{ zona }}
+              </option>
+            }
+
+          </select>
+
+          @if (
+            pacienteForm.controls.zona.touched &&
+            pacienteForm.controls.zona.invalid
+          ) {
+            <small class="error">
+              Seleccioná una zona.
+            </small>
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PROBLEMAS DE SALUD -->
+    <section class="form-card">
+
+      <div class="section-header">
+
+        <div class="section-icon health">
+          <span class="material-symbols-outlined">
+            medical_services
+          </span>
+        </div>
+
+        <div>
+          <h2>Problemas de salud</h2>
+          <p>
+            Seleccioná las patologías o condiciones correspondientes
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="disease-grid">
+
+        @for (
+          enfermedad of enfermedades;
+          track enfermedad
+        ) {
+
+          <button
+            type="button"
+            class="disease-option"
+            [class.selected]="enfermedadSeleccionada(enfermedad)"
+            (click)="seleccionarEnfermedad(enfermedad)"
+          >
+
+            <span
+              class="check-box"
+              [class.checked]="enfermedadSeleccionada(enfermedad)"
+            >
+              @if (enfermedadSeleccionada(enfermedad)) {
+                <span class="material-symbols-outlined">
+                  check
+                </span>
+              }
+            </span>
+
+            <span class="disease-name">
+              {{ enfermedad }}
+            </span>
+
+          </button>
+
+        }
+
+      </div>
+
+      @if (
+        pacienteForm.controls.enfermedades.touched &&
+        pacienteForm.controls.enfermedades.invalid
+      ) {
+        <small class="error disease-error">
+          Seleccioná al menos un problema de salud.
+        </small>
+      }
+
+    </section>
+
+
+    <!-- OBSERVACIONES -->
+    <section class="form-card">
+
+      <div class="section-header">
+
+        <div class="section-icon notes">
+          <span class="material-symbols-outlined">
+            notes
+          </span>
+        </div>
+
+        <div>
+          <h2>Observaciones</h2>
+          <p>
+            Información adicional relevante para el seguimiento
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <textarea
+          id="observaciones"
+          formControlName="observaciones"
+          rows="4"
+          placeholder="Ingresá observaciones, antecedentes u otra información relevante..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- ACCIONES -->
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        class="save-button"
+      >
+        <span class="material-symbols-outlined">
+          save
+        </span>
+
+        Guardar paciente
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

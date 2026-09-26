@@ -1,1 +1,342 @@
-<p>pacientes works!</p>
+<div class="patients-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>Pacientes</h1>
+      <p>Gestión y seguimiento de pacientes registrados</p>
+    </div>
+
+    <button
+  type="button"
+  class="new-patient-button"
+  routerLink="/pacientes/nuevo"
+>
+  <span class="material-symbols-outlined">add</span>
+  Nuevo paciente
+</button>
+
+  </div>
+
+
+  <!-- RESUMEN -->
+  <div class="patients-summary">
+
+    <div class="summary-text">
+
+      <strong>
+        {{ totalPacientes }}
+      </strong>
+
+      <span>
+        pacientes registrados
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- FILTROS -->
+  <div class="filters-container">
+
+    <!-- BUSCADOR -->
+    <div class="search-container">
+
+      <span class="material-symbols-outlined">
+        search
+      </span>
+
+      <input
+  type="text"
+  placeholder="Buscar por nombre, DNI o barrio..."
+  [(ngModel)]="busqueda"
+  (input)="aplicarFiltros()"
+>
+
+    </div>
+
+
+    <!-- ZONA -->
+    <select
+  class="filter-select"
+  [(ngModel)]="zonaSeleccionada"
+  (change)="aplicarFiltros()"
+>
+
+     <option value="">
+  Todas las zonas
+</option>
+
+<option value="Zona Norte">
+  Zona Norte
+</option>
+
+<option value="Zona Centro">
+  Zona Centro
+</option>
+
+<option value="Zona Sur">
+  Zona Sur
+</option>
+
+<option value="Zona Oeste">
+  Zona Oeste
+</option>
+
+    </select>
+
+
+    <!-- PATOLOGÍA -->
+   <select
+  class="filter-select"
+  [(ngModel)]="patologiaSeleccionada"
+  (change)="aplicarFiltros()"
+>
+
+  <option value="">
+    Todas las patologías
+  </option>
+
+  <option value="HTA">
+    HTA
+  </option>
+
+  <option value="DBT">
+    DBT
+  </option>
+
+  <option value="HTA + DBT">
+    HTA + DBT
+  </option>
+
+  <option value="Otras">
+    Otras
+  </option>
+
+</select>
+
+
+    <!-- ESTADO -->
+    <select
+  class="filter-select"
+  [(ngModel)]="estadoSeleccionado"
+  (change)="aplicarFiltros()"
+>
+
+  <option value="">
+    Todos los estados
+  </option>
+
+  <option value="Activo">
+    Activo
+  </option>
+
+  <option value="Inactivo">
+    Inactivo
+  </option>
+
+</select>
+
+  </div>
+
+
+  <!-- TABLA -->
+  <div class="patients-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Paciente</th>
+            <th>Edad</th>
+            <th>Zona</th>
+            <th>Patología</th>
+            <th>Último control</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+@for (paciente of pacientesFiltrados; track paciente.id) {
+    
+            <tr>
+
+              <!-- PACIENTE -->
+              <td>
+
+                <div class="patient-cell">
+
+                  <div class="patient-avatar">
+                    {{ paciente.nombre.charAt(0) }}
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      {{ paciente.nombre }}
+                    </strong>
+
+                    <span>
+                      DNI {{ paciente.dni }}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- EDAD -->
+              <td>
+                {{ paciente.edad }} años
+              </td>
+
+
+              <!-- ZONA -->
+              <td>
+
+                <span class="zone-badge">
+                  {{ paciente.zona }}
+                </span>
+
+              </td>
+
+
+              <!-- PATOLOGÍAS -->
+              <td>
+
+                <div class="pathologies">
+
+                  @for (
+                    enfermedad of paciente.enfermedades;
+                    track enfermedad
+                  ) {
+
+                    <span
+                      class="pathology-badge"
+                      [class.hta]="enfermedad === 'HTA'"
+                      [class.dbt]="enfermedad === 'DBT'"
+                    >
+                      {{ enfermedad }}
+                    </span>
+
+                  }
+
+                </div>
+
+              </td>
+
+
+              <!-- ÚLTIMO CONTROL -->
+              <td>
+
+                <span class="control-date">
+                  {{ paciente.ultimoControl }}
+                </span>
+
+              </td>
+
+
+              <!-- ESTADO -->
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class.active]="paciente.activo"
+                >
+
+                  <span class="status-dot"></span>
+
+                  {{ paciente.activo ? 'Activo' : 'Inactivo' }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ACCIÓN -->
+              <td>
+
+                <button
+                  class="view-button"
+                  (click)="verFicha(paciente)"
+                >
+
+                  Ver ficha
+
+                  <span class="material-symbols-outlined">
+                    chevron_right
+                  </span>
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="table-footer">
+
+      <span>
+        Mostrando 1-{{ pacientes.length }} de {{ totalPacientes }} pacientes
+      </span>
+
+
+      <div class="pagination">
+
+        <button disabled>
+          <span class="material-symbols-outlined">
+            chevron_left
+          </span>
+        </button>
+
+        <button class="active">
+          1
+        </button>
+
+        <button>
+          2
+        </button>
+
+        <button>
+          3
+        </button>
+
+        <span>...</span>
+
+        <button>
+          46
+        </button>
+
+        <button>
+          <span class="material-symbols-outlined">
+            chevron_right
+          </span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

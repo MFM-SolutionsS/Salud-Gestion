@@ -1,1 +1,370 @@
-<p>estadisticas works!</p>
+<div class="statistics-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>Estadísticas</h1>
+      <p>
+        Análisis general de los pacientes registrados
+      </p>
+    </div>
+
+    <div class="header-filter">
+
+      <span class="material-symbols-outlined">
+        location_on
+      </span>
+
+      <select
+        [value]="zonaSeleccionada"
+        (change)="cambiarZona($any($event.target).value)"
+      >
+        <option>Todas las zonas</option>
+
+        @for (zona of zonas; track zona.nombre) {
+          <option [value]="zona.nombre">
+            {{ zona.nombre }}
+          </option>
+        }
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESUMEN -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon patients">
+        <span class="material-symbols-outlined">
+          groups
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span>Total de pacientes</span>
+        <strong>{{ totalPacientes }}</strong>
+        <small>Pacientes registrados</small>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon hta">
+        <span class="material-symbols-outlined">
+          favorite
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span>HTA</span>
+        <strong>184</strong>
+        <small>40% del total</small>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon dbt">
+        <span class="material-symbols-outlined">
+          bloodtype
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span>DBT</span>
+        <strong>96</strong>
+        <small>21% del total</small>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon combined">
+        <span class="material-symbols-outlined">
+          medical_services
+        </span>
+      </div>
+
+      <div class="stat-content">
+        <span>HTA + DBT</span>
+        <strong>73</strong>
+        <small>16% del total</small>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PRIMERA FILA -->
+  <div class="content-grid">
+
+
+    <!-- ZONAS -->
+    <section class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Pacientes por zona</h2>
+          <p>
+            Distribución territorial de pacientes
+          </p>
+        </div>
+
+        <span class="material-symbols-outlined panel-icon">
+          map
+        </span>
+
+      </div>
+
+
+      <div class="bar-list">
+
+        @for (zona of zonas; track zona.nombre) {
+
+          <div class="bar-item">
+
+            <div class="bar-info">
+
+              <span>
+                {{ zona.nombre }}
+              </span>
+
+              <strong>
+                {{ zona.pacientes }}
+              </strong>
+
+            </div>
+
+            <div class="progress">
+
+              <div
+                class="progress-value zone"
+                [style.width.%]="zona.porcentaje"
+              ></div>
+
+            </div>
+
+            <span class="percentage">
+              {{ zona.porcentaje }}%
+            </span>
+
+          </div>
+
+        }
+
+      </div>
+
+    </section>
+
+
+    <!-- PATOLOGÍAS -->
+    <section class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Distribución de patologías</h2>
+          <p>
+            Principales condiciones registradas
+          </p>
+        </div>
+
+        <span class="material-symbols-outlined panel-icon">
+          monitoring
+        </span>
+
+      </div>
+
+
+      <div class="bar-list">
+
+        @for (
+          patologia of patologias;
+          track patologia.nombre
+        ) {
+
+          <div class="bar-item">
+
+            <div class="bar-info">
+
+              <span>
+                {{ patologia.nombre }}
+              </span>
+
+              <strong>
+                {{ patologia.pacientes }}
+              </strong>
+
+            </div>
+
+            <div class="progress">
+
+              <div
+                class="progress-value"
+                [class]="patologia.clase"
+                [style.width.%]="patologia.porcentaje"
+              ></div>
+
+            </div>
+
+            <span class="percentage">
+              {{ patologia.porcentaje }}%
+            </span>
+
+          </div>
+
+        }
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- SEGUNDA FILA -->
+  <div class="content-grid">
+
+
+    <!-- EDADES -->
+    <section class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Distribución por edad</h2>
+          <p>
+            Pacientes agrupados por rango etario
+          </p>
+        </div>
+
+        <span class="material-symbols-outlined panel-icon">
+          groups
+        </span>
+
+      </div>
+
+
+      <div class="age-list">
+
+        @for (
+          grupo of gruposEdad;
+          track grupo.nombre
+        ) {
+
+          <div class="age-item">
+
+            <div class="age-label">
+
+              <span>
+                {{ grupo.nombre }}
+              </span>
+
+              <strong>
+                {{ grupo.pacientes }}
+              </strong>
+
+            </div>
+
+            <div class="progress">
+
+              <div
+                class="progress-value age"
+                [style.width.%]="grupo.porcentaje"
+              ></div>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </section>
+
+
+    <!-- ESTADO -->
+    <section class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Estado de pacientes</h2>
+          <p>
+            Situación actual de los registros
+          </p>
+        </div>
+
+        <span class="material-symbols-outlined panel-icon">
+          verified
+        </span>
+
+      </div>
+
+
+      <div class="status-content">
+
+        <div class="status-circle">
+
+          <div>
+            <strong>
+              {{ porcentajeActivos }}%
+            </strong>
+
+            <span>
+              activos
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="status-list">
+
+          <div class="status-item">
+
+            <span class="status-indicator active"></span>
+
+            <div>
+              <span>Activos</span>
+              <strong>{{ pacientesActivos }}</strong>
+            </div>
+
+          </div>
+
+
+          <div class="status-item">
+
+            <span class="status-indicator inactive"></span>
+
+            <div>
+              <span>Inactivos</span>
+              <strong>{{ pacientesInactivos }}</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

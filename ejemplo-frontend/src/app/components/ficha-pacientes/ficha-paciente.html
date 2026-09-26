@@ -1,0 +1,502 @@
+<div class="patient-detail-page">
+
+  <!-- TOP BAR -->
+  <div class="detail-topbar">
+
+    <button
+      class="back-button"
+      (click)="volver()">
+
+      <span class="material-symbols-outlined">
+        arrow_back
+      </span>
+
+      Volver a pacientes
+
+    </button>
+
+    <div class="top-actions">
+
+      <button
+        class="secondary-button"
+        (click)="editarPaciente()">
+
+        <span class="material-symbols-outlined">
+          edit
+        </span>
+
+        Editar paciente
+
+      </button>
+
+      <button
+        class="primary-button"
+        (click)="nuevoControl()">
+
+        <span class="material-symbols-outlined">
+          add
+        </span>
+
+        Nuevo control
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- PATIENT HEADER -->
+  <section class="patient-header-card">
+
+    <div class="patient-main-info">
+
+      <div class="large-avatar">
+        {{ paciente.nombre.charAt(0) }}
+      </div>
+
+      <div class="patient-name">
+
+        <div class="name-row">
+
+          <h1>
+            {{ paciente.nombre }}
+          </h1>
+
+          <span
+            class="status-badge"
+            [class.active]="paciente.activo">
+
+            <span class="status-dot"></span>
+
+            {{ paciente.activo ? 'Activo' : 'Inactivo' }}
+
+          </span>
+
+        </div>
+
+        <p>
+          DNI {{ paciente.dni }}
+        </p>
+
+        <span class="patient-zone">
+
+          <span class="material-symbols-outlined">
+            location_on
+          </span>
+
+          {{ paciente.zona }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="patient-id">
+
+      <span>Paciente Nº</span>
+
+      <strong>
+        {{ paciente.id.toString().padStart(6, '0') }}
+      </strong>
+
+    </div>
+
+  </section>
+
+
+  <!-- SUMMARY -->
+  <div class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon blue">
+        <span class="material-symbols-outlined">
+          person
+        </span>
+      </div>
+
+      <div>
+        <span>Edad</span>
+        <strong>{{ paciente.edad }} años</strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon red">
+        <span class="material-symbols-outlined">
+          favorite
+        </span>
+      </div>
+
+      <div>
+        <span>Problemas de salud</span>
+        <strong>{{ paciente.enfermedades.length }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon green">
+        <span class="material-symbols-outlined">
+          calendar_month
+        </span>
+      </div>
+
+      <div>
+        <span>Último control</span>
+        <strong>{{ paciente.ultimoControl }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon orange">
+        <span class="material-symbols-outlined">
+          location_on
+        </span>
+      </div>
+
+      <div>
+        <span>Zona</span>
+        <strong>{{ paciente.zona }}</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CONTENT -->
+  <div class="detail-grid">
+
+
+    <!-- INFORMACIÓN PERSONAL -->
+    <section class="detail-card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Información personal</h2>
+
+          <p>
+            Datos generales del paciente
+          </p>
+        </div>
+
+        <span class="material-symbols-outlined">
+          badge
+        </span>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <span>Nombre completo</span>
+          <strong>{{ paciente.nombre }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>DNI</span>
+          <strong>{{ paciente.dni }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Edad</span>
+          <strong>{{ paciente.edad }} años</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Zona</span>
+          <strong>{{ paciente.zona }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Teléfono</span>
+          <strong>3777 - 456789</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Dirección</span>
+          <strong>Av. San Martín 1234</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Fecha de nacimiento</span>
+          <strong>14/05/1968</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Contacto de emergencia</span>
+          <strong>María Pérez</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PROBLEMAS DE SALUD -->
+    <section class="detail-card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Problemas de salud</h2>
+
+          <p>
+            Diagnósticos registrados
+          </p>
+        </div>
+
+        <span class="material-symbols-outlined">
+          medical_information
+        </span>
+
+      </div>
+
+
+      <div class="health-problems">
+
+        @for (
+          enfermedad of paciente.enfermedades;
+          track enfermedad
+        ) {
+
+          <div class="health-problem">
+
+            <div class="problem-icon">
+
+              <span class="material-symbols-outlined">
+                monitoring
+              </span>
+
+            </div>
+
+            <div>
+
+              <strong>
+                {{ enfermedad }}
+              </strong>
+
+              <span>
+                Diagnóstico registrado
+              </span>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <div class="health-problem other">
+
+          <div class="problem-icon">
+
+            <span class="material-symbols-outlined">
+              add
+            </span>
+
+          </div>
+
+          <div>
+
+            <strong>
+              Agregar problema de salud
+            </strong>
+
+            <span>
+              Registrar un nuevo diagnóstico
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HISTORIAL -->
+    <section class="detail-card history-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>Historial de controles</h2>
+
+          <p>
+            Seguimiento clínico del paciente
+          </p>
+
+        </div>
+
+        <button
+          class="small-action"
+          (click)="nuevoControl()">
+
+          <span class="material-symbols-outlined">
+            add
+          </span>
+
+          Nuevo control
+
+        </button>
+
+      </div>
+
+
+      <div class="history-list">
+
+        <div class="history-item">
+
+          <div class="history-date">
+            <strong>15</strong>
+            <span>SEP</span>
+          </div>
+
+          <div class="history-content">
+
+            <div class="history-title">
+
+              <strong>
+                Control general
+              </strong>
+
+              <span>
+                Médico: Dra. Laura Gómez
+              </span>
+
+            </div>
+
+            <div class="control-values">
+
+              <div>
+                <span>Presión arterial</span>
+                <strong>135 / 85 mmHg</strong>
+              </div>
+
+              <div>
+                <span>Glucemia</span>
+                <strong>108 mg/dL</strong>
+              </div>
+
+              <div>
+                <span>Peso</span>
+                <strong>82 kg</strong>
+              </div>
+
+            </div>
+
+            <p class="control-observation">
+              Paciente estable. Se mantiene tratamiento actual.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="history-item">
+
+          <div class="history-date">
+            <strong>20</strong>
+            <span>AGO</span>
+          </div>
+
+          <div class="history-content">
+
+            <div class="history-title">
+
+              <strong>
+                Control de seguimiento
+              </strong>
+
+              <span>
+                Médico: Dr. Carlos Martínez
+              </span>
+
+            </div>
+
+            <div class="control-values">
+
+              <div>
+                <span>Presión arterial</span>
+                <strong>140 / 90 mmHg</strong>
+              </div>
+
+              <div>
+                <span>Glucemia</span>
+                <strong>116 mg/dL</strong>
+              </div>
+
+            </div>
+
+            <p class="control-observation">
+              Se recomienda continuar seguimiento periódico.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="history-item">
+
+          <div class="history-date">
+            <strong>18</strong>
+            <span>JUL</span>
+          </div>
+
+          <div class="history-content">
+
+            <div class="history-title">
+
+              <strong>
+                Control clínico
+              </strong>
+
+              <span>
+                Médico: Dra. Laura Gómez
+              </span>
+
+            </div>
+
+            <div class="control-values">
+
+              <div>
+                <span>Presión arterial</span>
+                <strong>138 / 86 mmHg</strong>
+              </div>
+
+              <div>
+                <span>Glucemia</span>
+                <strong>112 mg/dL</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

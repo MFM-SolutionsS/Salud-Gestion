@@ -1,1 +1,320 @@
-<p>zonas works!</p>
+<div class="zones-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>Zonas sanitarias</h1>
+
+      <p>
+        Distribución y seguimiento de pacientes por zona
+      </p>
+    </div>
+
+    <div class="total-badge">
+
+      <span class="material-symbols-outlined">
+        groups
+      </span>
+
+      <div>
+        <strong>{{ totalPacientes }}</strong>
+        <span>pacientes registrados</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESUMEN -->
+  <div class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon patients">
+        <span class="material-symbols-outlined">
+          groups
+        </span>
+      </div>
+
+      <div class="summary-content">
+        <span>Total de pacientes</span>
+        <strong>{{ totalPacientes }}</strong>
+        <small>Pacientes registrados</small>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon zones">
+        <span class="material-symbols-outlined">
+          location_on
+        </span>
+      </div>
+
+      <div class="summary-content">
+        <span>Zonas activas</span>
+        <strong>{{ zonas.length }}</strong>
+        <small>Zonas sanitarias</small>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon average">
+        <span class="material-symbols-outlined">
+          analytics
+        </span>
+      </div>
+
+      <div class="summary-content">
+        <span>Promedio por zona</span>
+        <strong>{{ promedioPacientes }}</strong>
+        <small>Pacientes por zona</small>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon main">
+        <span class="material-symbols-outlined">
+          trending_up
+        </span>
+      </div>
+
+      <div class="summary-content">
+        <span>Mayor concentración</span>
+        <strong>{{ zonaMayorCantidad.pacientes }}</strong>
+        <small>{{ zonaMayorCantidad.nombre }}</small>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DISTRIBUCIÓN -->
+  <section class="distribution-card">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Distribución de pacientes</h2>
+
+        <p>
+          Cantidad de pacientes registrados en cada zona sanitaria
+        </p>
+      </div>
+
+      <span class="material-symbols-outlined section-header-icon">
+        pie_chart
+      </span>
+
+    </div>
+
+
+    <div class="distribution-list">
+
+      @for (zona of zonas; track zona.nombre) {
+
+        <div class="distribution-item">
+
+          <div class="distribution-info">
+
+            <div class="zone-name">
+
+              <span
+                class="zone-color"
+                [style.background]="zona.color"
+              ></span>
+
+              <strong>{{ zona.nombre }}</strong>
+
+            </div>
+
+            <div class="zone-numbers">
+
+              <strong>
+                {{ zona.pacientes }}
+              </strong>
+
+              <span>
+                {{ zona.porcentaje }}%
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-value"
+              [style.width.%]="zona.porcentaje"
+              [style.background]="zona.color"
+            ></div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- ZONAS -->
+  <div class="zones-grid">
+
+    @for (zona of zonas; track zona.nombre) {
+
+      <article class="zone-card">
+
+        <!-- CARD HEADER -->
+        <div class="zone-card-header">
+
+          <div class="zone-title">
+
+            <div
+              class="zone-icon"
+              [style.background]="zona.color + '18'"
+              [style.color]="zona.color"
+            >
+
+              <span class="material-symbols-outlined">
+                location_on
+              </span>
+
+            </div>
+
+            <div>
+
+              <h2>
+                {{ zona.nombre }}
+              </h2>
+
+              <span>
+                Zona sanitaria
+              </span>
+
+            </div>
+
+          </div>
+
+          <span class="percentage">
+            {{ zona.porcentaje }}%
+          </span>
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="zone-total">
+
+          <strong>
+            {{ zona.pacientes }}
+          </strong>
+
+          <span>
+            pacientes
+          </span>
+
+        </div>
+
+
+        <!-- PATOLOGÍAS -->
+        <div class="pathology-section">
+
+          <span class="section-label">
+            Distribución por condición
+          </span>
+
+
+          <div class="pathology-row">
+
+            <span>
+              HTA
+            </span>
+
+            <strong>
+              {{ zona.hta }}
+            </strong>
+
+          </div>
+
+
+          <div class="pathology-row">
+
+            <span>
+              DBT
+            </span>
+
+            <strong>
+              {{ zona.dbt }}
+            </strong>
+
+          </div>
+
+
+          <div class="pathology-row">
+
+            <span>
+              HTA + DBT
+            </span>
+
+            <strong>
+              {{ zona.htaDbt }}
+            </strong>
+
+          </div>
+
+
+          <div class="pathology-row">
+
+            <span>
+              Otras
+            </span>
+
+            <strong>
+              {{ zona.otros }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="zone-card-footer">
+
+          <span class="material-symbols-outlined">
+            calendar_today
+          </span>
+
+          <span>
+            Último control
+          </span>
+
+          <strong>
+            {{ zona.ultimoControl }}
+          </strong>
+
+        </div>
+
+      </article>
+
+    }
+
+  </div>
+
+</div>

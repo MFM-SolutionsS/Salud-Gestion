@@ -1,25 +1,218 @@
 <mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav mode="side" opened>
-    <mat-toolbar color="primary">Menú</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard">Dashboard</a>
-      <a mat-list-item routerLink="/pacientes">Pacientes</a>
-      <a mat-list-item routerLink="/zonas">Zonas</a>
-      <a mat-list-item routerLink="/estadisticas">Estadísticas</a>
-      <a mat-list-item routerLink="/informes">Informes</a>
-    </mat-nav-list>
+
+  <!-- SIDEBAR -->
+  <mat-sidenav
+    #sidenav
+    class="app-sidenav"
+    [mode]="sidenavMode"
+    [opened]="sidenavOpened">
+
+    <div class="sidenav-header">
+
+      <div class="brand-icon">
+        <span class="material-symbols-outlined">
+          local_hospital
+        </span>
+      </div>
+
+      <div class="brand-info">
+        <strong>Gestión Hospitalaria</strong>
+        <span>Sistema de seguimiento</span>
+      </div>
+
+    </div>
+
+
+    <div class="menu-section">
+
+      <span class="menu-title">
+        PRINCIPAL
+      </span>
+
+      <mat-nav-list>
+
+        <a
+          mat-list-item
+          routerLink="/dashboard"
+          routerLinkActive="active-link">
+
+          <span class="material-symbols-outlined menu-icon">
+            dashboard
+          </span>
+
+          <span>Inicio</span>
+
+        </a>
+
+
+        <a
+          mat-list-item
+          routerLink="/pacientes"
+          routerLinkActive="active-link">
+
+          <span class="material-symbols-outlined menu-icon">
+            groups
+          </span>
+
+          <span>Pacientes</span>
+
+        </a>
+
+
+        <a
+          mat-list-item
+          routerLink="/zonas"
+          routerLinkActive="active-link">
+
+          <span class="material-symbols-outlined menu-icon">
+            location_on
+          </span>
+
+          <span>Zonas</span>
+
+        </a>
+
+
+        <a
+          mat-list-item
+          routerLink="/estadisticas"
+          routerLinkActive="active-link">
+
+          <span class="material-symbols-outlined menu-icon">
+            monitoring
+          </span>
+
+          <span>Estadísticas</span>
+
+        </a>
+
+
+        <a
+          mat-list-item
+          routerLink="/informes"
+          routerLinkActive="active-link">
+
+          <span class="material-symbols-outlined menu-icon">
+            description
+          </span>
+
+          <span>Informes</span>
+
+        </a>
+
+      </mat-nav-list>
+
+    </div>
+
+
+    <div class="menu-section">
+
+      <span class="menu-title">
+        ADMINISTRACIÓN
+      </span>
+
+      <mat-nav-list>
+
+        <a
+          mat-list-item
+          routerLink="/usuarios"
+          routerLinkActive="active-link">
+
+          <span class="material-symbols-outlined menu-icon">
+            manage_accounts
+          </span>
+
+          <span>Usuarios</span>
+
+        </a>
+
+      </mat-nav-list>
+
+    </div>
+
+
+    <div class="sidenav-footer">
+
+      <div class="user-avatar">
+        A
+      </div>
+
+      <div class="user-info">
+        <strong>Administrador</strong>
+        <span>Administrador</span>
+      </div>
+
+      <span class="material-symbols-outlined user-menu-icon">
+        more_vert
+      </span>
+
+    </div>
+
   </mat-sidenav>
 
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="sidenav.toggle()">
+
+  <!-- CONTENIDO -->
+  <mat-sidenav-content class="app-content">
+
+    <mat-toolbar class="top-toolbar">
+
+      <button
+        mat-icon-button
+        class="menu-button"
+        (click)="sidenav.toggle()">
+
         <mat-icon>menu</mat-icon>
+
       </button>
-      <span>Gestión Hospitalaria</span>
+
+
+      <div class="toolbar-title">
+
+        <span class="material-symbols-outlined">
+          local_hospital
+        </span>
+
+        <span>Gestión Hospitalaria</span>
+
+      </div>
+
+
+      <div class="toolbar-spacer"></div>
+
+
+      <button
+        mat-icon-button
+        class="notification-button">
+
+        <span class="material-symbols-outlined">
+          notifications
+        </span>
+
+      </button>
+
+
+      <div class="toolbar-user">
+
+        <div class="toolbar-avatar">
+          A
+        </div>
+
+        <div class="toolbar-user-info">
+          <strong>Administrador</strong>
+          <span>Administrador</span>
+        </div>
+
+      </div>
+
     </mat-toolbar>
 
-    <div class="main-content">
+
+    <main class="main-content">
+
       <router-outlet></router-outlet>
-    </div>
+
+    </main>
+
   </mat-sidenav-content>
+
 </mat-sidenav-container>

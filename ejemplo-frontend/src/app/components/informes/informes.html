@@ -1,1 +1,627 @@
-<p>informes works!</p>
+<div class="reports-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <h1>Generar informes</h1>
+
+      <p>
+        Seleccioná los criterios para generar un informe de pacientes
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- CONFIGURACIÓN -->
+
+  <section class="generator-card">
+
+    <div class="section-header">
+
+      <div class="section-icon">
+        <span class="material-symbols-outlined">
+          description
+        </span>
+      </div>
+
+      <div>
+        <h2>Configuración del informe</h2>
+
+        <p>
+          Elegí el tipo de informe y los filtros que querés aplicar
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- TIPO DE INFORME -->
+
+    <div class="field-group">
+
+      <label>
+        Tipo de informe
+      </label>
+
+      <div class="report-types">
+
+        @for (
+          tipo of tiposInforme;
+          track tipo.value
+        ) {
+
+          <button
+            type="button"
+            class="report-type"
+            [class.selected]="tipoInforme === tipo.value"
+            (click)="seleccionarTipo(tipo.value)"
+          >
+
+            <span class="type-icon">
+
+              <span class="material-symbols-outlined">
+                {{ tipo.icono }}
+              </span>
+
+            </span>
+
+            <span class="type-content">
+
+              <strong>
+                {{ tipo.nombre }}
+              </strong>
+
+              <small>
+                {{ tipo.descripcion }}
+              </small>
+
+            </span>
+
+            @if (tipoInforme === tipo.value) {
+
+              <span class="selected-icon">
+                <span class="material-symbols-outlined">
+                  check_circle
+                </span>
+              </span>
+
+            }
+
+          </button>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- FILTROS -->
+
+    <div class="filters-grid">
+
+      <div class="form-field">
+
+        <label for="zona">
+          Zona sanitaria
+        </label>
+
+        <select
+          id="zona"
+          [(ngModel)]="zonaSeleccionada"
+        >
+
+          @for (zona of zonas; track zona) {
+
+            <option [value]="zona">
+              {{ zona }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="desde">
+          Desde
+        </label>
+
+        <input
+          id="desde"
+          type="date"
+          [(ngModel)]="fechaDesde"
+        >
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="hasta">
+          Hasta
+        </label>
+
+        <input
+          id="hasta"
+          type="date"
+          [(ngModel)]="fechaHasta"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- ACCIONES -->
+
+    <div class="generator-actions">
+
+      <button
+        type="button"
+        class="clear-button"
+        (click)="limpiar()"
+      >
+        Limpiar
+      </button>
+
+      <button
+        type="button"
+        class="generate-button"
+        (click)="generarInforme()"
+      >
+
+        <span class="material-symbols-outlined">
+          analytics
+        </span>
+
+        Generar informe
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       VISTA PREVIA
+       ===================================================== -->
+
+  @if (informeGenerado) {
+
+    <section class="preview-section">
+
+      <div class="preview-header">
+
+        <div>
+
+          <span class="preview-label">
+            VISTA PREVIA
+          </span>
+
+          <h2>
+            {{ tituloInforme }}
+          </h2>
+
+          <p>
+            {{ descripcionInforme }}
+          </p>
+
+        </div>
+
+
+        <div class="preview-actions">
+
+          <button
+            type="button"
+            class="secondary-button"
+          >
+
+            <span class="material-symbols-outlined">
+              print
+            </span>
+
+            Imprimir
+
+          </button>
+
+
+          <button
+            type="button"
+            class="primary-button"
+          >
+
+            <span class="material-symbols-outlined">
+              picture_as_pdf
+            </span>
+
+            Descargar PDF
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESUMEN GENERAL -->
+
+      @if (tipoInforme === 'general') {
+
+        <div class="summary-grid">
+
+          <div class="summary-card">
+
+            <span class="material-symbols-outlined">
+              groups
+            </span>
+
+            <div>
+              <small>Total pacientes</small>
+              <strong>458</strong>
+            </div>
+
+          </div>
+
+
+          <div class="summary-card">
+
+            <span class="material-symbols-outlined">
+              favorite
+            </span>
+
+            <div>
+              <small>HTA</small>
+              <strong>184</strong>
+            </div>
+
+          </div>
+
+
+          <div class="summary-card">
+
+            <span class="material-symbols-outlined">
+              bloodtype
+            </span>
+
+            <div>
+              <small>DBT</small>
+              <strong>96</strong>
+            </div>
+
+          </div>
+
+
+          <div class="summary-card">
+
+            <span class="material-symbols-outlined">
+              verified
+            </span>
+
+            <div>
+              <small>Activos</small>
+              <strong>431</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- HTA -->
+
+      @if (tipoInforme === 'hta') {
+
+        <div class="report-result">
+
+          <div class="result-stats">
+
+            <div>
+              <span>Total HTA</span>
+              <strong>128</strong>
+            </div>
+
+            <div>
+              <span>Control reciente</span>
+              <strong class="green">96</strong>
+            </div>
+
+            <div>
+              <span>Sin control reciente</span>
+              <strong class="red">32</strong>
+            </div>
+
+          </div>
+
+
+          <div class="table-card">
+
+            <div class="table-header">
+
+              <div>
+                <h3>Pacientes con HTA</h3>
+
+                <p>
+                  Pacientes incluidos en el informe
+                </p>
+              </div>
+
+              <span class="count-badge">
+                {{ pacienteHTA.length }} mostrados
+              </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Paciente</th>
+                    <th>Edad</th>
+                    <th>Zona</th>
+                    <th>Clasificación</th>
+                    <th>Último control</th>
+                    <th></th>
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  @for (
+                    paciente of pacienteHTA;
+                    track paciente.id
+                  ) {
+
+                    <tr>
+
+                      <td>
+                        <strong>
+                          {{ paciente.nombre }}
+                        </strong>
+                      </td>
+
+                      <td>
+                        {{ paciente.edad }} años
+                      </td>
+
+                      <td>
+                        {{ paciente.zona }}
+                      </td>
+
+                      <td>
+                        {{ paciente.clasificacion }}
+                      </td>
+
+                      <td>
+                        {{ paciente.ultimoControl }}
+                      </td>
+
+                      <td>
+
+                        <button
+                          type="button"
+                          class="view-button"
+                          (click)="verPaciente(paciente.id)"
+                        >
+                          Ver paciente
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- DBT -->
+
+      @if (tipoInforme === 'dbt') {
+
+        <div class="report-result">
+
+          <div class="result-stats">
+
+            <div>
+              <span>Total DBT</span>
+              <strong>74</strong>
+            </div>
+
+            <div>
+              <span>Tipo 1</span>
+              <strong class="blue">8</strong>
+            </div>
+
+            <div>
+              <span>Tipo 2</span>
+              <strong class="green">63</strong>
+            </div>
+
+            <div>
+              <span>Otros</span>
+              <strong class="orange">3</strong>
+            </div>
+
+          </div>
+
+
+          <div class="table-card">
+
+            <div class="table-header">
+
+              <div>
+                <h3>Pacientes con DBT</h3>
+
+                <p>
+                  Pacientes incluidos en el informe
+                </p>
+              </div>
+
+              <span class="count-badge">
+                {{ pacienteDBT.length }} mostrados
+              </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Paciente</th>
+                    <th>Edad</th>
+                    <th>Zona</th>
+                    <th>Tipo</th>
+                    <th>Último control</th>
+                    <th></th>
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  @for (
+                    paciente of pacienteDBT;
+                    track paciente.id
+                  ) {
+
+                    <tr>
+
+                      <td>
+                        <strong>
+                          {{ paciente.nombre }}
+                        </strong>
+                      </td>
+
+                      <td>
+                        {{ paciente.edad }} años
+                      </td>
+
+                      <td>
+                        {{ paciente.zona }}
+                      </td>
+
+                      <td>
+                        {{ paciente.clasificacion }}
+                      </td>
+
+                      <td>
+                        {{ paciente.ultimoControl }}
+                      </td>
+
+                      <td>
+
+                        <button
+                          type="button"
+                          class="view-button"
+                          (click)="verPaciente(paciente.id)"
+                        >
+                          Ver paciente
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- ZONAS -->
+
+      @if (tipoInforme === 'zonas') {
+
+        <div class="zone-report">
+
+          <div class="zone-report-row">
+            <span>Zona Norte</span>
+            <strong>142 pacientes</strong>
+          </div>
+
+          <div class="zone-report-row">
+            <span>Zona Centro</span>
+            <strong>128 pacientes</strong>
+          </div>
+
+          <div class="zone-report-row">
+            <span>Zona Sur</span>
+            <strong>109 pacientes</strong>
+          </div>
+
+          <div class="zone-report-row">
+            <span>Zona Oeste</span>
+            <strong>79 pacientes</strong>
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- CONTROLES -->
+
+      @if (tipoInforme === 'controles') {
+
+        <div class="empty-report">
+
+          <span class="material-symbols-outlined">
+            event_available
+          </span>
+
+          <h3>
+            Informe de controles pendientes
+          </h3>
+
+          <p>
+            Acá se mostrarán los pacientes que no tengan
+            un control reciente.
+          </p>
+
+        </div>
+
+      }
+
+    </section>
+
+  }
+
+</div>

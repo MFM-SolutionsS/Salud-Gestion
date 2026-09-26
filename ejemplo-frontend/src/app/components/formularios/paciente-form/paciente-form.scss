@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0');
+
+:host {
+  display: block;
+}
+
+.form-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 26px 30px 40px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.page-header {
+  margin-bottom: 22px;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  h1 {
+    margin: 0;
+    color: #172b3a;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: #718096;
+    font-size: 13px;
+  }
+}
+
+.back-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e1e8ed;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #60717e;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background: #f3f7f8;
+    color: #247ba0;
+    border-color: #d4e2e8;
+  }
+}
+
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
+
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 18px;
+  padding: 13px 16px;
+
+  border: 1px solid #cce9d8;
+  border-radius: 10px;
+
+  background: #f0faf4;
+  color: #2f8050;
+
+  .material-symbols-outlined {
+    font-size: 23px;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  strong {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.patient-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-card {
+  padding: 21px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7edf1;
+  border-radius: 14px;
+
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+
+    color: #1b2b38;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 4px 0 0;
+
+    color: #8996a3;
+    font-size: 12px;
+  }
+}
+
+.section-icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #e8f3f7;
+  color: #247ba0;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  &.health {
+    background: #edf7f0;
+    color: #3d9660;
+  }
+
+  &.notes {
+    background: #f5f0fa;
+    color: #79539c;
+  }
+}
+
+
+/* =========================================================
+   INPUT GRID
+   ========================================================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.form-field label {
+  margin-bottom: 6px;
+
+  color: #52606d;
+  font-size: 12px;
+  font-weight: 600;
+
+  span {
+    color: #d45b5b;
+    margin-left: 2px;
+  }
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #dce4e9;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #263947;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.form-field input,
+.form-field select {
+  height: 42px;
+  padding: 0 12px;
+}
+
+.form-field textarea {
+  min-height: 100px;
+  padding: 11px 12px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #a5afb7;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: #247ba0;
+  box-shadow: 0 0 0 3px rgba(36, 123, 160, 0.09);
+}
+
+.form-field input:hover,
+.form-field select:hover,
+.form-field textarea:hover {
+  border-color: #c8d5dc;
+}
+
+
+/* =========================================================
+   DISEASES
+   ========================================================= */
+
+.disease-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.disease-option {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #e1e8ed;
+  border-radius: 9px;
+
+  background: #fafcfd;
+  color: #52606d;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.disease-option:hover {
+  background: #f3f8fa;
+  border-color: #cbdde4;
+}
+
+.disease-option.selected {
+  background: #e8f3f7;
+  border-color: #9bc7d7;
+  color: #247ba0;
+}
+
+.check-box {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #cbd6dc;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  .material-symbols-outlined {
+    font-size: 15px;
+  }
+
+  &.checked {
+    border-color: #247ba0;
+    background: #247ba0;
+    color: #ffffff;
+  }
+}
+
+.disease-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.disease-error {
+  display: block;
+  margin-top: 10px;
+}
+
+
+/* =========================================================
+   ERRORS
+   ========================================================= */
+
+.error {
+  margin-top: 5px;
+
+  color: #c64f4f;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  padding-top: 2px;
+}
+
+.cancel-button,
+.save-button {
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 0 17px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.cancel-button {
+  border: 1px solid #dce4e9;
+  background: #ffffff;
+  color: #52606d;
+
+  &:hover {
+    background: #f6f8f9;
+  }
+}
+
+.save-button {
+  border: 1px solid #247ba0;
+  background: #247ba0;
+  color: #ffffff;
+
+  .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: #1f6d8e;
+    border-color: #1f6d8e;
+    transform: translateY(-1px);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .form-page {
+    padding: 22px 18px 30px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .disease-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 550px) {
+
+  .form-page {
+    padding: 18px 14px 25px;
+  }
+
+  .header-info {
+    align-items: flex-start;
+
+    h1 {
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  .form-card {
+    padding: 17px;
+  }
+
+  .disease-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+}

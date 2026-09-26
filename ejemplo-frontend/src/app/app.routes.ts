@@ -11,8 +11,16 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'pacientes', component: PacientesComponent },
+  {
+  path: 'pacientes/nuevo',
+  loadComponent: () =>
+    import('./components/formularios/paciente-form/paciente-form.component')
+      .then(m => m.PacienteFormComponent)
+},
+  { path: 'pacientes/:id', loadComponent: () =>   import('./components/ficha-pacientes/ficha-paciente.component')  .then(m => m.FichaPacienteComponent)},
   { path: 'zonas', component: ZonasComponent },
   { path: 'estadisticas', component: EstadisticasComponent },
   { path: 'informes', component: InformesComponent },
-  { path: '**', redirectTo: 'dashboard' } // ruta por defecto
+  { path: '**', redirectTo: 'dashboard' },
+  
 ];
