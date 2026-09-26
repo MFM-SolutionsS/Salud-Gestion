@@ -5,9 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:ghpages": "ng build --configuration ghpages & copy /Y src\\404.html dist\\ghpages\\browser\\404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ejemplo-frontend": "node dist/ejemplo-frontend/server/server.mjs"
+    "serve:ssr:ejemplo-frontend": "node dist/ejemplo-frontend/server/server.mjs",
+    "deploy:ghpages": "npm run build:ghpages && npx angular-cli-ghpages --dir=dist/ghpages/browser"
   },
   "private": true,
   "packageManager": "npm@11.11.0",
@@ -34,6 +36,7 @@
     "@angular/compiler-cli": "^21.2.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "angular-cli-ghpages": "^3.1.0",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
